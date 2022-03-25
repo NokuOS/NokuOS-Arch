@@ -8,6 +8,24 @@ echo "####################################################################"
 echo ""
 echo ""
 
+if [ "$(id -u)" = 0 ]; then
+	echo "#############################################"
+	echo "##Please use this Script as a normal User  ##"
+	echo "##This Script wil make changen to the Home ##"
+	echo "##Directory of the User Running it, which  ##"
+	echo "##is in the Case of root /Root, a directory##"
+	echo "##we dont want to mess with. You wil be    ##"
+	echo "##asked for a sudo password when needed    ##"
+	echo "#############################################"
+	exit 1	
+fi
+
+##Installig dialog and welcome message
+
+sudo pacman -S --noconfirm dialog
+
+dialog --colors --msgbox "Welcome to NokuOs, my Pot-Install Script for Arch-Based GNU/Linux Distributions. This Script will Install essential Packages like The Alacritty Terminal Emuator, the Fish Shell and also deploy my dotFiles, so everything is already well configured" 16 50
+
 
 ##creating script folder
 
@@ -36,15 +54,11 @@ echo "##########################"
 
 sudo pacman -S alacritty firefox fish git shell-color-scripts flatpak vim jdk17-openjdk jre17-openjdk starship exa zsh 
 
-
-#Minder
-flatpak install flathub com.github.phase1geo.minder
-
 #Planner
 flatpak install flathub com.github.alainm23.planner
 
 
-##Installs software not available in pacman
+##Installs software not available via pacman
 
 #Vim-Plug
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
@@ -75,7 +89,7 @@ cd dotFiles
 #Moving shell dotFiles
 mv .bashrc ~
 mv .zshrc ~
-mv config.fish ~/.config/fish/
+mv config.fish ~/.config/fish/config.fish
 
 echo "installed shell dotFiles"
 
@@ -83,6 +97,11 @@ echo "installed shell dotFiles"
 mv .vimrc ~
 
 echo "installed vimrc"
+
+#setting xmonad config
+mv -r .xmonad ~
+
+echo "installed xmonad config and autorun"
 
 #moving script folder
 mv -r .scripts ~
@@ -104,13 +123,13 @@ read -p "Enter your Choice (1-4) :" shellchange
 
 if [ "$shellchange" = "1" ]
 then
-	sudo chsh -s /usr/bin/fish
+	 chsh -s /usr/bin/fish
 elif [ "$shellchange" = 2 ]
 then
-	sudo chsh -s /bin/zsh
+	 chsh -s /bin/zsh
 elif [ $shellchange = "3" ]
 then
-	sudo chsh -s /bin/bash
+	 chsh -s /bin/bash
 else
 	echo "aborted"
 fi
@@ -140,7 +159,7 @@ echo "###################"
 echo "##Last Cleanup...##"
 echo "###################"
 
-#remove unnescecary folders
+#remove Wallpaper folder
 
 rm -r Wallpaper
 
@@ -151,13 +170,13 @@ echo "added wallpapers"
 cd ~
 rm -r .nokuos
 
-echo "cleanup Done!\n"
+echo "CleanUp Done!\n"
 
 echo "############################"
 echo "##Thanks for using NokuOS!##"
 echo "############################"
 
-echo "if yu have any problmes with my script, consider opening an Issue at my GitHub Repository https://github.com/NokuWasTaken/NokuOS"
+echo "if yu have any problems with my script, consider opening an Issue at my GitHub Repository [https://github.com/NokuWasTaken/NokuOS]"
 echo "Goodbye"
 
 
