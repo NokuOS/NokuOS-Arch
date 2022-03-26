@@ -41,3 +41,5 @@
 + Support for both Debian and Arch-based Distros
 
 + Auto-Install for Xorg so it can just be used from a Command Line Install 
+
++ Creating an own Repo for every software used by NokuOS
