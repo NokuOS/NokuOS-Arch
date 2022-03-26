@@ -1,4 +1,10 @@
-##NokuOS Post-Install Script for Arch-Based Linux Distributions
+#!/bin/bash
+#_   _       _           ____   _____ 
+#| \ | |     | |         / __ \ / ____\
+#|  \| | ___ | | ___   _| |  | | (___   NAME: NokuOS
+#| . ` |/ _ \| |/ / | | | |  | |\___ \  RELEASE: ALPHA v.0.2.1
+#| |\  | (_) |   <| |_| | |__| |____) | AUTHOR: Noku
+#|_| \_|\___/|_|\_\\__,_|\____/|_____/  GITHUB: github.com/NokuWasTaken/NokuOS
 
 clear
 
@@ -8,24 +14,23 @@ echo "####################################################################"
 echo ""
 echo ""
 
+##Checking if user is root
 if [ "$(id -u)" = 0 ]; then
-	echo "#############################################"
-	echo "##Please use this Script as a normal User  ##"
-	echo "##This Script wil make changen to the Home ##"
-	echo "##Directory of the User Running it, which  ##"
-	echo "##is in the Case of root /Root, a directory##"
-	echo "##we dont want to mess with. You wil be    ##"
-	echo "##asked for a sudo password when needed    ##"
-	echo "#############################################"
-	exit 1	
+        echo "#############################################"
+        echo "##Please use this Script as a normal User  ##"
+        echo "##This Script wil make changen to the Home ##"
+        echo "##Directory of the User Running it, which  ##"
+        echo "##is in the Case of root /Root, a directory##"
+        echo "##we dont want to mess with. You wil be    ##"
+        echo "##asked for a sudo password when needed    ##"
+        echo "#############################################"
+        exit 1
 fi
 
-##Installig dialog and welcome message
-
+##Install dialog and welcome message
 sudo pacman -S --noconfirm dialog
 
-dialog --colors --msgbox "Welcome to NokuOs, my Pot-Install Script for Arch-Based GNU/Linux Distributions. This Script will Install essential Packages like The Alacritty Terminal Emuator, the Fish Shell and also deploy my dotFiles, so everything is already well configured" 16 50
-
+dialog --colors --msgbox "Welcome to NokuOs, my Pot-Install Script for Arch-Based GNU/Linux Distributions. This Script will Install essential Packages like The Alacritty Terminal Emulator, the Fish Shell and also deploy my dotFiles, so everything is already well configured" 16 50
 
 ##creating script folder
 
@@ -38,7 +43,7 @@ cd .nokuos
 #System update
 
 echo "######################"
-echo "##Updating system...##"
+echo "##Updating System...##"
 echo "######################"
 
 sudo pacman -Syyu
@@ -51,8 +56,9 @@ echo "##Installing Software...##"
 echo "##########################"
 
 ##Installs all posible software with pacman
+sudo pacman --needed --ask 4 -Sy - < pkglist.txt
 
-sudo pacman -S alacritty firefox fish git shell-color-scripts flatpak vim jdk17-openjdk jre17-openjdk starship exa zsh 
+sudo pacman -S --noconfirm  firefox fish git shell-color-scripts flatpak vim jdk17-openjdk jre17-openjdk starship exa zsh kitty  
 
 #Planner
 flatpak install flathub com.github.alainm23.planner
