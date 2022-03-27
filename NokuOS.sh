@@ -1,7 +1,7 @@
 #!/bin/bash
-#_   _       _           ____   _____ 
+# _   _       _           ____   _____ 
 #| \ | |     | |         / __ \ / ____\
-#|  \| | ___ | | ___   _| |  | | (___   NAME: NokuOS
+#|  \| | ___ | | ___   _| |  | | (___   NAME: NokuOS-Arch
 #| . ` |/ _ \| |/ / | | | |  | |\___ \  RELEASE: ALPHA v.0.2.1
 #| |\  | (_) |   <| |_| | |__| |____) | AUTHOR: Noku
 #|_| \_|\___/|_|\_\\__,_|\____/|_____/  GITHUB: github.com/NokuWasTaken/NokuOS
@@ -30,7 +30,7 @@ fi
 ##Install dialog and welcome message
 sudo pacman -S --noconfirm dialog
 
-dialog --colors --msgbox "Welcome to NokuOs, my Pot-Install Script for Arch-Based GNU/Linux Distributions. This Script will Install essential Packages like The Alacritty Terminal Emulator, the Fish Shell and also deploy my dotFiles, so everything is already well configured" 16 50
+dialog --colors --msgbox "Welcome to NokuOs, my Post-Install Script for Arch-Based GNU/Linux Distributions. This Script will Install essential Packages like The Kitty Terminal Emulator, the Fish Shell and also deploy my dotFiles, so everything is already well configured" 16 50
 
 ##creating script folder
 
@@ -93,26 +93,32 @@ echo "cloned github repository
 cd dotFiles
 
 #Moving shell dotFiles
-mv .bashrc ~
-mv .zshrc ~
-mv config.fish ~/.config/fish/config.fish
+
+mv .bashrc $HOME
+mv .zshrc $HOME
+mv config.fish $HOME/.config/fish/config.fish
 
 echo "installed shell dotFiles"
 
 #moving .vimrc
-mv .vimrc ~
+
+mv .vimrc $HOME
 
 echo "installed vimrc"
 
+#moving .conkyrc
+
+mv .conkyrc $HOME
+
+echo "moved .conkyrc"
+
 #setting xmonad config
-mv -r .xmonad ~
 
-echo "installed xmonad config and autorun"
+mv -r .xmonad $HOME
 
-#moving script folder
-mv -r .scripts ~
+echo "installed .xmonad"
 
-echo "installed scripts"
+cd $HOME/.nokuos
 
 ##changes user shell
 
@@ -124,7 +130,7 @@ echo "Which Shell do you wanna use?"
 echo "1) fish"
 echo "2) zsh"
 echo "3) bash"
-echo "4) quit"
+echo "4) abort"
 read -p "Enter your Choice (1-4) :" shellchange
 
 if [ "$shellchange" = "1" ]
@@ -147,19 +153,11 @@ echo "############################"
 
 #moving wallpapers
 
-cd Wallpaper
+cd wallpaper
 
-sudo mv 1.png /usr/share/wallpapers
-sudo mv 2.png /usr/share/wallpapers
-sudo mv 3.png /usr/share/wallpapers
-sudo mv 4.png /usr/share/wallpapers
-sudo mv 5.png /usr/share/wallpapers
-sudo mv 6.png /usr/share/wallpapers
-sudo mv 7.png /usr/share/wallpapers
+sudo mv wallpaper.png anime-train-station.png mountains.png /usr/share/wallpapers
 
-cd ..
-
-
+cd $HOME/.nokuos
 
 echo "###################"
 echo "##Last Cleanup...##"
@@ -167,14 +165,12 @@ echo "###################"
 
 #remove Wallpaper folder
 
-rm -r Wallpaper
-
-echo "added wallpapers" 
+rm -rf wallpaper
 
 #removing script folder
 
 cd ~
-rm -r .nokuos
+rm -rf .nokuos
 
 echo "CleanUp Done!\n"
 
@@ -182,7 +178,7 @@ echo "############################"
 echo "##Thanks for using NokuOS!##"
 echo "############################"
 
-echo "if yu have any problems with my script, consider opening an Issue at my GitHub Repository [https://github.com/NokuWasTaken/NokuOS]"
+echo "if you have any problems with my script, consider opening an Issue at my GitHub Repository [https://github.com/NokuOS/NokuOS-Arch]"
 echo "Goodbye"
 
 
