@@ -10,13 +10,9 @@ kitty
 starship
 exa
 git
-shell-color-scripts
 
 firefox
 vim
 base-devel
 conky
 
-flatpak
-jdk17-openjdk
-jre17-openjdk

@@ -32,9 +32,9 @@ sudo pacman -S --noconfirm dialog
 
 dialog --colors --msgbox "Welcome to NokuOs, my Post-Install Script for Arch-Based GNU/Linux Distributions. This Script will Install essential Packages like The Kitty Terminal Emulator, the Fish Shell and also deploy my dotFiles, so everything is already well configured" 16 50
 
-##creating script folder
+##create script folder
 
-cd ~
+cd $HOME
 
 mkdir .nokuos
 
@@ -48,8 +48,7 @@ echo "######################"
 
 sudo pacman -Syyu
 
-
-##Installs core Software
+##Install core Software
 
 echo "##########################"
 echo "##Installing Software...##"
@@ -58,29 +57,7 @@ echo "##########################"
 ##Installs all posible software with pacman
 sudo pacman --needed --ask 4 -Sy - < pkglist.txt
 
-sudo pacman -S --noconfirm  firefox fish git shell-color-scripts flatpak vim jdk17-openjdk jre17-openjdk starship exa zsh kitty  
-
-#Planner
-flatpak install flathub com.github.alainm23.planner
-
-
-##Installs software not available via pacman
-
-#Vim-Plug
-sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-
-#AppImageLauncher
-wget https://github.com/TheAssassin/AppImageLauncher/releases/download/v2.2.0/appimagelauncher-lite-2.2.0-travis995-0f91801-x86_64.AppImage
-chmod +x appimagelauncher-lite-2.2.0-travis995-0f91801-x86_64.AppImage 
-./appimagelauncher-lite-2.2.0-travis995-0f91801-x86_64.AppImage 
-
-#Marktext
-wget https://github.com/marktext/marktext/releases/latest/download/marktext-x86_64.AppImage
-chmod +x marktext-x86_64.AppImage
-./marktext-x86_64.AppImage
-
-
-##Installing Dotfiles
+##Deploy Dotfiles
 
 echo "##########################"
 echo "##Installing dotFiles...##"
@@ -88,35 +65,34 @@ echo "##########################"
 
 git clone https://github.com/NokuWasTaken/dotFiles.git
 
-echo "cloned github repository
-"
+echo "cloned github repository"
+
 cd dotFiles
 
-#Moving shell dotFiles
+cd .config
+
+mv nvim $HOME/.config
+mv kitty $HOME/.config
+mv fish $HOME/.config
+
+cd ..
+
+rm -rf .config   
+
 
 mv .bashrc $HOME
+
 mv .zshrc $HOME
-mv config.fish $HOME/.config/fish/config.fish
-
-echo "installed shell dotFiles"
-
-#moving .vimrc
 
 mv .vimrc $HOME
 
-echo "installed vimrc"
+mv .vim $HOME
 
-#moving .conkyrc
+mv .NERDTreeBookmarks $HOME 
 
-mv .conkyrc $HOME
+mv .vimrc $HOME
 
-echo "moved .conkyrc"
-
-#setting xmonad config
-
-mv -r .xmonad $HOME
-
-echo "installed .xmonad"
+echo "deployed dotFiles"
 
 cd $HOME/.nokuos
 
